@@ -17,6 +17,8 @@ COPY inference.py .
 COPY *.joblib .
 COPY coordenadas_aus.csv .
 COPY input.csv .
+COPY model_nn.keras .
+
 
 # Comando por defecto al correr el contenedor
 CMD ["python", "inference.py", "input.csv"]
