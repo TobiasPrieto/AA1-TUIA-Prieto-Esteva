@@ -220,7 +220,8 @@ if __name__ == "__main__":
     except:
         # Generar dato dummy si no hay CSV (Para prueba rápida)
         print(f"No se encontró {input_file}. ")
-       
+        # Aquí podrías poner una lógica para salir o crear un df_input vacío
+        sys.exit(1)
     
     try:
         # 3. Procesar
@@ -230,25 +231,58 @@ if __name__ == "__main__":
         # predict devuelve probabilidades (array de arrays)
         predictions_proba = model.predict(X, verbose=0)
         
+        # Lista para almacenar resultados
+        resultados = []
+
         print(f"\n{'='*40}")
         print("RESULTADOS DE INFERENCIA (RED NEURONAL)")
         print(f"{'='*40}")
         
         for i, prob_arr in enumerate(predictions_proba):
             prob_lluvia = prob_arr[0] # Probabilidad de clase 1
+            prob_no_lluvia = 1 - prob_lluvia # Probabilidad de clase 0
+            
+            # Definir predicción basada en umbral 0.5 (ajustable)
             pred_clase = 1 if prob_lluvia > 0.5 else 0
+            pred_etiqueta = "Yes" if pred_clase == 1 else "No"
             
             res = "LLOVERÁ" if pred_clase == 1 else "NO LLOVERÁ"
             loc = df_input.iloc[i].get('Location', 'Desconocida')
-            date = df_input.iloc[i].get('Date', 'Hoy')
             
-            print(f"Registro {i+1}: {loc} ({date})")
+            # Formatear fecha
+            date_raw = df_input.iloc[i].get('Date', 'Hoy')
+            date_str = str(date_raw) # Asegurar que sea string
+            if isinstance(date_raw, pd.Timestamp):
+                 date_str = date_raw.strftime('%Y-%m-%d')
+
+            
+            print(f"Registro {i+1}: {loc} ({date_str})")
             print(f"  Pronóstico: {res}")
             print(f"  Probabilidad: {prob_lluvia:.2%}")
             print("-" * 30)
             
+            # Guardar en la lista de resultados
+            resultados.append({
+                'Location': loc,
+                'Date': date_str,
+                'Prediccion': pred_etiqueta,
+                'Probabilidad_Lluvia': prob_lluvia,
+                'Probabilidad_No_Lluvia': prob_no_lluvia
+            })
+            
         print(f"{'='*40}\n")
         
+        # Guardar resultados en CSV
+        output_csv = 'predictions.csv'
+        df_resultados = pd.DataFrame(resultados)
+        
+        # Asegurar el orden de columnas solicitado
+        columnas_orden = ['Location', 'Date', 'Prediccion', 'Probabilidad_Lluvia', 'Probabilidad_No_Lluvia']
+        df_resultados = df_resultados[columnas_orden]
+        
+        df_resultados.to_csv(output_csv, index=False)
+        print(f"Resultados guardados exitosamente en: {output_csv}")
+
     except Exception as e:
         print(f"Error crítico en inferencia: {e}")
         import traceback
