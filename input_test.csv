@@ -1,3 +1,0 @@
-Date,Location,MinTemp,MaxTemp,Rainfall,Evaporation,Sunshine,WindGustDir,WindGustSpeed,WindDir9am,WindDir3pm,WindSpeed9am,WindSpeed3pm,Humidity9am,Humidity3pm,Pressure9am,Pressure3pm,Cloud9am,Cloud3pm,Temp9am,Temp3pm,RainToday
-2023-11-25,Sydney,13.4,22.9,0.6,,,W,44.0,W,WNW,20.0,24.0,71.0,22.0,1007.7,1007.1,8.0,,16.9,21.8,No
-2016-01-24,Katherine,25,36.5,7.4,7.6,NA,N,30,WSW,SW,4,11,85,NA,1010.7,1006.8,7,NA,28,NA,Si
