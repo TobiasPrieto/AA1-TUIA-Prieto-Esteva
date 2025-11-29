@@ -26,6 +26,10 @@ El script principal `inference.py` realiza las siguientes tareas:
 
 - Tener [Docker](https://www.docker.com/get-started) instalado y ejecutándose en tu máquina.
 
+- Clonar el repositorio:
+```bash
+git clone https://github.com/TobiasPrieto/AA1-TUIA-Prieto-Esteva.git
+```
 ### 1. Construir la Imagen
 
 Navega a la carpeta `docker` en tu terminal y ejecuta el siguiente comando para construir la imagen:
