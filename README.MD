@@ -50,7 +50,7 @@ Para probar que todo funciona correctamente usando el archivo `input.csv` que ya
 
 POWERSHELL
 ```PowerShell
-docker run --rm -v $(pwd):/app prediccion-clima
+docker run --rm -v "$($PWD.Path):/app" prediccion-clima
 ```
 
 
